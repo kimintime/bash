@@ -2,24 +2,43 @@
 
 echo "----------Generate new script----------"
 
-#Keep asking for the filename until a valid one is given, or exit the script
+#Function to get a filename if one is not provided. Exits the script on q.
 
-while true; do
+get_filename() {
 
-	read -p "Enter a filename: " myfile
+    while true; do
 
-	if [[ "$myfile" == *".sh" ]]; then
-		break
+        read -p "Enter a filename: " myfile
 
-	elif [[ "$myfile" == "q" ]]; then
-		exit 0
+        if [[ "$myfile" == *".sh" ]]; then
+            break
 
-	else
-		echo "Please enter a valid filename ending in .sh. q Quits."
+        elif [[ "$myfile" == [Qq] ]]; then
+            exit 0
 
-	fi
+        else
+            echo "Please enter a valid filename ending in .sh. [q Quits]."
+        fi
 
-done
+    done
+}
+
+#Checks that the provided name is valid, and asks to get the filename if it isn't.
+
+if [ "$1" ]; then
+
+    if [[ "$1" == *".sh" ]]; then
+        myfile="$1"
+
+    else
+        echo "Please provide a valid filename ending in .sh. [q Quits]."
+        get_filename
+    fi
+
+else
+    get_filename
+fi
+
 
 #Add shebang to script and set permission to executable
 #It's my script I'll dev null if I want to
