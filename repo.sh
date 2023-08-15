@@ -12,6 +12,7 @@
 
 echo "-----------Publish Commits------------"
 
+#Adds a new remote. Checks first that there is a remote name and a valid remote address, and keeps asking unless q exits the function.
 newaddress() {
     while true; do
         local remote_name
@@ -32,7 +33,7 @@ newaddress() {
 
             elif [[ "$remote_address" == *.git ]]; then
                 git remote add "$remote_name" "$remote_address"
-                
+
             else
                 echo "Invalid remote address. [q Continues without saving]"
             fi
