@@ -4,7 +4,7 @@ echo "-----------Publish Commits------------"
 
 while true; do
 
-    # Initialize the repository if needed
+    # Initialize the repository if needed. n Exits the script. Any other letter asks again until y/n is entered.
     read -p "Publish repo? [y/n] " option
 
     if [[ "$option" == "y" ]]; then
@@ -20,6 +20,7 @@ while true; do
             touch .gitignore
         fi
 
+        #Adds my default gitignore content, edit for your needs.
         if [ ! -s .gitignore ]; then
             echo -e "# General\n.DS_Store\n.AppleDouble" > .gitignore
             echo "gitignore successfully generated"
@@ -36,7 +37,7 @@ while true; do
 
         fi
 
-        #Stage changes and publish repo
+        #Stage changes and publish repo, then exit the script.
         git add .
         echo "Changes staged."
 
@@ -51,11 +52,12 @@ while true; do
         echo "Commit published successfully"
         exit 0
 
-    #Cancels creating any git files or publishing the repo
+    #Cancels creating any git files or publishing the repo, and exits the script without creating the repo.
     elif [[ "$option" == "n" ]]; then
         echo "Publishing repo canceled."
         exit 0
 
+    #Instructs the user to enter y/n before asking again to publish the repo?
     else
         echo "Please enter [y/n]"
     fi
