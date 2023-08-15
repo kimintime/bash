@@ -37,14 +37,20 @@ while true; do
 
         fi
 
-        #Create remote if needed
-        read -p "Does remote exist? [n to enter address] " remote_option
+        #Create remote if needed. Asks for the name and address, and exits with error if none is provided.
+        read -p "Add remote? [y to enter address] " remote_option
 
-        if [ "$remote_option" == [Nn] ]; then
-            read -p "Enter an address for the repo: " repo_address
+        if [ "$remote_option" == [Yy] ]; then
+            read -p "Enter an address for the repo: " remote_address
+            read -p "Enter a name for the new remote: " remote_name
 
-            git remote add origin "$repo_address"
+            if [[ "$remote_address" && "$remote_address" ]]; then
+                git remote add "$remote_name" "$remote_address"
 
+            else
+                echo "Please enter a remote name and remote address."
+                exit 1
+            fi
         fi
 
         #Stage changes and publish repo, then exit the script.
