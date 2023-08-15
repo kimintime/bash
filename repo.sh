@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Add to your $PATH to take advantage of using this script anywhere in your terminal.
+# For example:
+
+# pico ~/.zshrc // This depends on what shell you use, you may need to look this up for yourself.
+
+# export PATH="$PATH:$HOME/bin" // Assumes you save your scripts to $HOME/bin. Edit this to reflect where the script is.
+# alias publish='repo.sh'
+
+# source ~/.zshrc or close and reopen terminal for changes to take effect
+
 echo "-----------Publish Commits------------"
 
 while true; do
@@ -7,7 +17,7 @@ while true; do
     # Initialize the repository if needed. n Exits the script. Any other letter asks again until y/n is entered.
     read -p "Publish repo? [y/n] " option
 
-    if [[ "$option" == "y" ]]; then
+    if [[ "$option" == [Yy] ]]; then
 
         if ! [ -d .git ]; then
             git init
@@ -30,7 +40,7 @@ while true; do
         #Create remote if needed
         read -p "Does remote exist? [n to enter address] " option
 
-        if [ "$option" == "n" ]; then
+        if [ "$option" == [Nn] ]; then
             read -p "Enter an address for the repo: " repo_address
 
             git remote add origin "$repo_address"
@@ -53,7 +63,7 @@ while true; do
         exit 0
 
     #Cancels creating any git files or publishing the repo, and exits the script without creating the repo.
-    elif [[ "$option" == "n" ]]; then
+    elif [[ "$option" == [Nn] ]]; then
         echo "Publishing repo canceled."
         exit 0
 
