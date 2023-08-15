@@ -12,6 +12,27 @@
 
 echo "-----------Publish Commits------------"
 
+newaddress() {
+
+    while true; do
+
+        read -p "Enter an address for the repo: " remote_address
+        read -p "Enter a name for the new remote: " remote_name
+
+        if [[ "$remote_address" && "$remote_address" == "*.git" ]]; then
+            git remote add "$remote_name" "$remote_address"
+
+        elif [[ "$remote_address" == [Qq] || "$remote_address" == [Qq] ]]; then
+            break;
+
+        else
+            echo "Please enter a remote name and remote address."
+        fi
+
+    done
+
+}
+
 while true; do
 
     # Initialize the repository if needed. n Exits the script. Any other letter asks again until y/n is entered.
@@ -37,20 +58,11 @@ while true; do
 
         fi
 
-        #Create remote if needed. Asks for the name and address, and exits with error if none is provided.
+        #Create remote if needed.
         read -p "Add remote? [y to enter address] " remote_option
 
-        if [ "$remote_option" == [Yy] ]; then
-            read -p "Enter an address for the repo: " remote_address
-            read -p "Enter a name for the new remote: " remote_name
-
-            if [[ "$remote_address" && "$remote_address" ]]; then
-                git remote add "$remote_name" "$remote_address"
-
-            else
-                echo "Please enter a remote name and remote address."
-                exit 1
-            fi
+        if [[ "$remote_option" == [Yy] ]]; then
+            newaddress
         fi
 
         #Stage changes and publish repo, then exit the script.
