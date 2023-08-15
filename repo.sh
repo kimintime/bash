@@ -15,9 +15,9 @@ echo "-----------Publish Commits------------"
 while true; do
 
     # Initialize the repository if needed. n Exits the script. Any other letter asks again until y/n is entered.
-    read -p "Publish repo? [y/n] " option
+    read -p "Publish repo? [y/n] " publish_option
 
-    if [[ "$option" == [Yy] ]]; then
+    if [[ "$publish_option" == [Yy] ]]; then
 
         if ! [ -d .git ]; then
             git init
@@ -38,9 +38,9 @@ while true; do
         fi
 
         #Create remote if needed
-        read -p "Does remote exist? [n to enter address] " option
+        read -p "Does remote exist? [n to enter address] " remote_option
 
-        if [ "$option" == [Nn] ]; then
+        if [ "$remote_option" == [Nn] ]; then
             read -p "Enter an address for the repo: " repo_address
 
             git remote add origin "$repo_address"
@@ -63,7 +63,7 @@ while true; do
         exit 0
 
     #Cancels creating any git files or publishing the repo, and exits the script without creating the repo.
-    elif [[ "$option" == [Nn] ]]; then
+    elif [[ "$publish_option" == [Nn] ]]; then
         echo "Publishing repo canceled."
         exit 0
 
