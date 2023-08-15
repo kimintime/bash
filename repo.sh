@@ -13,29 +13,35 @@
 echo "-----------Publish Commits------------"
 
 newaddress() {
-
     while true; do
         local remote_name
         local remote_address
-        local exit_option
 
-        read -p "Enter an address for the repo: " remote_address
-        read -p "Enter a name for the new remote: " remote_name
+        read -p "Enter a name for the repo (or 'q' to quit): " remote_name
 
-        if [[ "$remote_name" && "$remote_address" == "*.git" ]]; then
-            git remote add "$remote_name" "$remote_address"
-
-        elif [[ "$exit_option" == [Qq] ]]; then
+        if [[ "$remote_name" == [Qq] ]]; then
             echo "New remote not saved. Continuing..."
             break
 
+        elif [[ "$remote_name" ]]; then
+            read -p "Enter an address for the new remote (or 'q' to quit): " remote_address
+
+            if [[ "$remote_address" == [Qq] ]]; then
+                echo "New remote not saved. Continuing..."
+                break
+
+            elif [[ "$remote_address" == *.git ]]; then
+                git remote add "$remote_name" "$remote_address"
+                
+            else
+                echo "Invalid remote address. [q Continues without saving]"
+            fi
         else
-            read -p "Please enter a remote name and remote address. [q Continues without saving]" exit_option
+            echo "Please enter a remote name or 'q' to continue without saving."
         fi
-
     done
-
 }
+
 
 while true; do
 
