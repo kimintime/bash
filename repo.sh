@@ -15,7 +15,6 @@ echo "-----------Publish Commits------------"
 #Adds a new remote. Checks first that there is a remote name and a valid remote address, and keeps asking unless q exits the function.
 newaddress() {
     while true; do
-        local remote_name
         local remote_address
 
         read -p "Enter a name for the repo (or 'q' to quit): " remote_name
@@ -88,7 +87,14 @@ while true; do
 
         read -p "Enter branch name: " branch_name
 
-        git push origin "$branch_name"
+        #Uses the remote name if it was added
+        if [[ "$remote_name" ]]; then
+            git push "$remote_name" "$branch_name"
+
+        else
+            git push origin "$branch_name"
+        fi
+            
         echo "Commit published successfully"
         exit 0
 
