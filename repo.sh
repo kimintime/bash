@@ -49,6 +49,7 @@ while true; do
 
         git push origin "$branch_name"
         echo "Commit published successfully"
+        exit 0
 
     #Cancels creating any git files or publishing the repo
     elif [[ "$option" == "n" ]]; then
