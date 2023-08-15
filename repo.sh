@@ -33,6 +33,7 @@ newaddress() {
 
             elif [[ "$remote_address" == *.git ]]; then
                 git remote add "$remote_name" "$remote_address"
+                break
 
             else
                 echo "Invalid remote address. [q Continues without saving]"
