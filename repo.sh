@@ -43,6 +43,7 @@ newaddress() {
     done
 }
 
+#Chooses from list of current remotes
 choose_remote() {
 
     echo "---------Choose Remote--------"
