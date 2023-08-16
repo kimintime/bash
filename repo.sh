@@ -43,6 +43,16 @@ newaddress() {
     done
 }
 
+choose_remote() {
+
+    echo "---------Choose Remote--------"
+    git remote -v 
+
+    read -p "Enter the name of an existing remote: " existing_remote
+    remote_name="$existing_remote"
+}
+
+
 
 while true; do
 
@@ -70,10 +80,16 @@ while true; do
         fi
 
         #Create remote if needed.
-        read -p "Add remote? [y to enter address] " remote_option
+        read -p "Add a new remote? [y to enter address] " remote_option
 
         if [[ "$remote_option" == [Yy] ]]; then
             newaddress
+        fi
+
+        #Ask to choose from existing remotes
+        read -p "Choose from existing remotes? [y to choose from list] " remote_option
+        if [[ "$remote_option" == [Yy] ]]; then
+            choose_remote
         fi
 
         #Stage changes and publish repo, then exit the script.
