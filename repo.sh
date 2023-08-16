@@ -46,10 +46,16 @@ newaddress() {
 choose_remote() {
 
     echo "---------Choose Remote--------"
-    git remote -v 
+    git remote
 
-    read -p "Enter the name of an existing remote: " existing_remote
-    remote_name="$existing_remote"
+    read -p "Enter the name of an existing remote [q to continue without saving]:  " existing_remote
+
+    if [[ "$existing_remote" == [Qq] ]]; then
+        echo "Continuing with default..."
+
+    else
+        remote_name="$existing_remote"
+    fi
 }
 
 
