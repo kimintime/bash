@@ -4,6 +4,12 @@ echo "***********************************"
 
 echo "This is paramenter 1: $1"
 echo "This is paramenter 2: $2"
+
+#Shift - shifts parameter by 1, can add the number to shift
+shift 3
+
+echo "This is paramenter 1: $1"
+echo "This is paramenter 2: $2"
 echo "This is paramenter 3: $3"
 echo "This is paramenter 4: $4"
 echo "This is paramenter 5: $5"
@@ -35,6 +41,13 @@ echo "***********************************"
 for i in "$*"; do
 	echo "$i"
 done
+
+echo "***********************************"
+
+#Absolute path to script
+echo "$0"
+
+
 
 
 
