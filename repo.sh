@@ -59,7 +59,6 @@ choose_remote() {
 }
 
 
-
 while true; do
 
     # Initialize the repository if needed. n Exits the script. Any other letter asks again until y/n is entered.
@@ -85,16 +84,13 @@ while true; do
 
         fi
 
-        #Create remote if needed.
-        read -p "Add a new remote? [y to enter address] " remote_option
+        #Create remote if needed, or choose from list of remotes
+        read -p "Add a new remote, or choose from an existing remote: [n to enter address, c to choose from list] " remote_option
 
-        if [[ "$remote_option" == [Yy] ]]; then
+        if [[ "$remote_option" == [Nn] ]]; then
             newaddress
-        fi
 
-        #Ask to choose from existing remotes
-        read -p "Choose from existing remotes? [y to choose from list] " remote_option
-        if [[ "$remote_option" == [Yy] ]]; then
+        elif [[ "$remote_option" == [Cc] ]]; then
             choose_remote
         fi
 
