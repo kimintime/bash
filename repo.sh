@@ -46,6 +46,7 @@ newaddress() {
 choose_remote() {
 
     echo "---------Choose Remote--------"
+    local existing_remote
     git remote
 
     read -p "Enter the name of an existing remote [q to continue without saving]:  " existing_remote
