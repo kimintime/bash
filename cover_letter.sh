@@ -80,13 +80,13 @@ else
 fi
 
 if [ -n "$company_city" ]; then
-  sed "s/\[city\]/$employer_name/g" input.txt > "$output_file"
+  sed "s/\[city\]/$company_city/g" input.txt > "$output_file"
 else
   sed "/\[city\]/d" input.txt > "$output_file"
 fi
 
 if [ -n "$postal_code" ]; then
-  sed "s/\[postal code\]/$employer_name/g" input.txt > "$output_file"
+  sed "s/\[postal code\]/$postal_code/g" input.txt > "$output_file"
 else
   sed "/\[postal code\]/d" input.txt > "$output_file"
 fi
