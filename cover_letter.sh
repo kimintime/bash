@@ -5,7 +5,7 @@ not_empty(){
 	local var_name="$1"
   	local prompt_message="$2"
 
-	white true; do
+	while true; do
 		read -p "$prompt_message: " input
 
     	if [ -n "$input" ]; then
