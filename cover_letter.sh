@@ -31,6 +31,13 @@ replace_optional() {
   fi
 }
 
+# Check if the user provided an output file name as an argument
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <output_file_name>"
+  exit 1
+  
+fi
+
 # Accept the filename as a param
 output_file="$1"
 
