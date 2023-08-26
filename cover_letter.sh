@@ -26,6 +26,8 @@ fi
 
 output_file="$1"
 
+touch "$output_file"
+
 # Get the current date in the desired format (e.g., 21 August 2023)
 current_date=$(date "+%d %B %Y")
 
