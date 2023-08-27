@@ -76,13 +76,10 @@ not_empty team "Enter the replacement text for [team]: "
 # Ask the user the company's goals and vision
 not_empty vision "Enter the replacement text for [vision]: "
 
-
 echo "---------- GENERATING LETTER ----------"
-
 
 # Read the cover letter template from the file. Adjust this to suit your needs
 cover_letter_template=$(<cover_letter.md)
-
 
 # Replace instances of [text in brackets]
 cover_letter_content="${cover_letter_template//\[today date\]/$current_date}"
@@ -96,7 +93,6 @@ cover_letter_content="${cover_letter_content//\[job posting\]/$job_posting}"
 cover_letter_content="${cover_letter_content//\[team\]/$team}"
 cover_letter_content="${cover_letter_content//\[vision\]/$vision}"
 
-
 # Debug statement to check the replaced content
 echo "$cover_letter_content"
 
@@ -104,6 +100,9 @@ echo "$cover_letter_content"
 echo -e "$cover_letter_content" > "$output_file"
 
 echo "Replacement complete. Check '$output_file' for the updated text."
+
+# Take a glance at the text before opening it in iA Writer. Adjust as needed. Remove if not opening the file.
+sleep 10
 
 # Optional: if you're using iA Writer for markdown texts
 # Open in iA Writer - Adjust the path of the file to suit your needs.
