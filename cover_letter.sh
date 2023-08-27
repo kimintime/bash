@@ -1,9 +1,31 @@
 #!/bin/bash
 
+# This script is intended to help generating the usual text needed in a cover letter. It assumes the following values need filling in:
+#
+# [today date]
+# ----- Optional -----
+# [employer name] 
+# [company address]
+# [postal code]
+# [city]
+# ----- Required -----
+# [company name]
+# [position]
+# [job posting]
+# [team]
+# [vision]
+#
+# If your letter has Dear [employer name] and there is no [employer name], it's replaced with: To whom it may concern,.
+# Write your cover letter template based on your needs, and use these values to be filled in by this script.
+#
+# Adjust the file names and their paths to suit your needs, for example, my template and saved files are markdown text,
+# to be edited in iA Writer
+
+
 # Function to check that required text is not empty
 not_empty(){
   local var_name="$1"
-    local prompt_message="$2"
+  local prompt_message="$2"
 
   while true; do
     read -p "$prompt_message: " input
@@ -16,19 +38,6 @@ not_empty(){
       fi
 
   done
-}
-
-# Function to remove optional text
-replace_optional() {
-  local var_name="$1"
-  local var_value="$2"
-  local template="$3"
-
-  if [ -n "$var_value" ]; then
-    echo "${template//\[$var_name\]/$var_value}"
-  else
-    echo "$template" # No replacement, keep the original template
-  fi
 }
 
 # Check if the user provided an output file name as an argument
@@ -56,10 +65,11 @@ read -p "Enter the company address [Enter to continue]: " company_address
 read -p "Enter the postal code [Enter to continue]: " postal_code
 read -p "Enter the city [Enter to continue]: " company_city
 
-echo "---------- ENTER REPLACEMENT TEXT ----------"
-
 # Ask the user for the employer's name
 read -p "Enter the replacement text for [employer's name] [Enter to continue]: " employer_name
+
+
+echo "---------- ENTER REPLACEMENT TEXT ----------"
 
 # Ask the user for the company's name
 not_empty company_name "Enter the replacement text for [company name]: " 
@@ -78,15 +88,26 @@ not_empty vision "Enter the replacement text for [vision]: "
 
 echo "---------- GENERATING LETTER ----------"
 
-# Read the cover letter template from the file. Adjust this to suit your needs
+# Be sure to change the path of your input and output files to suit your needs.
+# Read the cover letter template from the file
 cover_letter_template=$(<cover_letter.md)
+
+# Define the greeting based on employer_name
+if [ -z "$employer_name" ]; then
+    greeting="To whom it may concern"
+else
+    greeting="Dear $employer_name"
+fi
+
+# Replace "Dear [employer name]" with "[greeting]"
+cover_letter_template=$(echo "$cover_letter_template" | sed "s/Dear \[employer name\]/$greeting/")
 
 # Replace instances of [text in brackets]
 cover_letter_content="${cover_letter_template//\[today date\]/$current_date}"
-cover_letter_content=$(replace_optional "employer's name" "$employer_name" "$cover_letter_content")
-cover_letter_content=$(replace_optional "company address" "$company_address" "$cover_letter_content")
-cover_letter_content=$(replace_optional "postal code" "$postal_code" "$cover_letter_content")
-cover_letter_content=$(replace_optional "city" "$company_city" "$cover_letter_content")
+cover_letter_content="${cover_letter_content//\[employer name\]/$employer_name}"
+cover_letter_content="${cover_letter_content//\[company address\]/$company_address}"
+cover_letter_content="${cover_letter_content//\[postal code\]/$postal_code}"
+cover_letter_content="${cover_letter_content//\[city\]/$city}"
 cover_letter_content="${cover_letter_content//\[company name\]/$company_name}"
 cover_letter_content="${cover_letter_content//\[position\]/$position}"
 cover_letter_content="${cover_letter_content//\[job posting\]/$job_posting}"
