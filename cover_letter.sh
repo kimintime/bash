@@ -104,3 +104,14 @@ echo "$cover_letter_content"
 echo -e "$cover_letter_content" > "$output_file"
 
 echo "Replacement complete. Check '$output_file' for the updated text."
+
+# Optional: if you're using iA Writer for markdown texts
+# Open in iA Writer - Adjust the path of the file to suit your needs.
+open -a "iA Writer" "$output_file"
+
+# Wait for iA Writer to open (adjust the sleep duration as needed)
+sleep 3
+
+# Send an AppleScript command to iA Writer to make it fullscreen
+osascript -e 'tell application "System Events" to keystroke "f" using {command down, control down}'
+
