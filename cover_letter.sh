@@ -129,8 +129,8 @@ sleep 10
 # Check if iA Writer is running
 if ! pgrep -x "iA Writer" > /dev/null; then
   
-    # iA Writer is not running, so open it
-    open -a "iA Writer" /Users/apollostowel/Library/Mobile\ Documents/27N4MQEA55~pro~writer/Documents/Coverletters/"$output_file"
+    # iA Writer is not running, so open it. Adjust this for the path of your file.
+    open -a "iA Writer" "$output_file"
 
     # Wait for iA Writer to open (adjust the sleep duration as needed)
     sleep 3
