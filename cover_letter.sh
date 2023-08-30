@@ -126,12 +126,18 @@ echo "Replacement complete. Check '$output_file' for the updated text."
 sleep 10
 
 # Optional: if you're using iA Writer for markdown texts
-# Open in iA Writer - Adjust the path of the file to suit your needs.
-open -a "iA Writer" "$output_file"
+# Check if iA Writer is running
+if ! pgrep -x "iA Writer" > /dev/null; then
+  
+    # iA Writer is not running, so open it
+    open -a "iA Writer" /Users/apollostowel/Library/Mobile\ Documents/27N4MQEA55~pro~writer/Documents/Coverletters/"$output_file"
 
-# Wait for iA Writer to open (adjust the sleep duration as needed)
-sleep 3
+    # Wait for iA Writer to open (adjust the sleep duration as needed)
+    sleep 3
 
-# Send an AppleScript command to iA Writer to make it fullscreen
-osascript -e 'tell application "System Events" to keystroke "f" using {command down, control down}'
-
+    # Send an AppleScript command to iA Writer to make it fullscreen
+    osascript -e 'tell application "System Events" to keystroke "f" using {command down, control down}'
+else
+    # iA Writer is already running, just display a message
+    echo "iA Writer is already running."
+fi
