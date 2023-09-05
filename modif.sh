@@ -17,8 +17,20 @@ if [ ! -d $dir ]; then
 	exit
 fi
 
-# Use stat command to check when file was modified
-content=$(stat -f %Sm $dir/* | cut -c 08-09)
+# Use stat command to check when file was modified, check for OSTYPE for correct syntax
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+
+	#Linux syntax
+	content=$( stat -c %y $dir/* | cut -c 12-13 )
+
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+
+	#Mac syntax
+	content=$(stat -f %Sm $dir/* | cut -c 08-09)
+
+else
+	echo "System not recognized."
+fi
 
 # Initialize array of hours that appear
 for j in {0..23}; do
@@ -34,7 +46,7 @@ for i in $content; do
 	(( hours[x]=${hours[x] +1} ))
 done
 
-echo -e "Hours \t Files \t\t Hours \t Files "
+echo -e "Hours \t Files \t\t Hours \t Files"
 echo -e "----- \t ----- \t\t ----- \t -----"
 
 for k in {0..11}; do
