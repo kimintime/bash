@@ -5,7 +5,7 @@ max="$1";
 count=0
 
 #Loop through the number of moves and cd for each one
-for (( i= 0; i < $max; i++ )); do
+for (( i= 0; i < max; i++ )); do
 	((count=count+1))
 	cd ../
 done

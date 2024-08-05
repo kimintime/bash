@@ -17,14 +17,14 @@ newaddress() {
     while true; do
         local remote_address
 
-        read -p "Enter a name for the repo (or 'q' to quit): " remote_name
+        read -r -p "Enter a name for the repo (or 'q' to quit): " remote_name
 
         if [[ "$remote_name" == [Qq] ]]; then
             echo "New remote not saved. Continuing..."
             break
 
         elif [[ "$remote_name" ]]; then
-            read -p "Enter an address for the new remote (or 'q' to quit): " remote_address
+            read -r -p "Enter an address for the new remote (or 'q' to quit): " remote_address
 
             if [[ "$remote_address" == [Qq] ]]; then
                 echo "New remote not saved. Continuing..."
@@ -50,7 +50,7 @@ choose_remote() {
     local existing_remote
     git remote
 
-    read -p "Enter the name of an existing remote [q to continue without saving]:  " existing_remote
+    read -r -p "Enter the name of an existing remote [q to continue without saving]:  " existing_remote
 
     if [[ "$existing_remote" == [Qq] ]]; then
         echo "Continuing with default..."
@@ -64,7 +64,7 @@ choose_remote() {
 while true; do
 
     # Initialize the repository if needed. n Exits the script. Any other letter asks again until y/n is entered.
-    read -p "Publish repo? [y/n] " publish_option
+    read -r -p "Publish repo? [y/n] " publish_option
 
     if [[ "$publish_option" == [Yy] ]]; then
 
@@ -87,7 +87,7 @@ while true; do
         fi
 
         #Create remote if needed, or choose from list of remotes
-        read -p "Add a new remote, or choose from an existing remote: [n to enter address, c to choose from list] " remote_option
+        read -r -p "Add a new remote, or choose from an existing remote: [n to enter address, c to choose from list] " remote_option
 
         if [[ "$remote_option" == [Nn] ]]; then
             newaddress
@@ -101,11 +101,11 @@ while true; do
         echo "Changes staged."
 
 
-        read -p "Enter commit message: " commit_message
+        read -r -p "Enter commit message: " commit_message
 
         git commit -m "$commit_message"
 
-        read -p "Enter branch name: " branch_name
+        read -r -p "Enter branch name: " branch_name
 
         #Uses the remote name if it was added
         if [[ "$remote_name" ]]; then
