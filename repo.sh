@@ -17,10 +17,11 @@ newaddress() {
     while true; do
         local remote_address
 
-        read -r -p "Enter a name for the repo (or 'q' to quit): " remote_name
+        read -r -p "Enter a remote name (usually 'origin') (or 'q' to quit): " remote_name
 
         if [[ "$remote_name" == [Qq] ]]; then
             echo "New remote not saved. Continuing..."
+            remote_name=""
             break
 
         elif [[ "$remote_name" ]]; then
@@ -28,6 +29,7 @@ newaddress() {
 
             if [[ "$remote_address" == [Qq] ]]; then
                 echo "New remote not saved. Continuing..."
+                remote_name=""
                 break
 
             elif [[ "$remote_address" == *.git ]]; then
@@ -68,8 +70,12 @@ while true; do
 
     if [[ "$publish_option" == [Yy] ]]; then
 
+        created_git=0
+        created_gitignore=0
+
         if ! [ -d .git ]; then
             git init
+            created_git=1
             echo "The repo is now initialized"
 
         fi
@@ -77,6 +83,7 @@ while true; do
         #Initialize gitignore if needed
         if ! [ -e .gitignore ]; then
             touch .gitignore
+            created_gitignore=1
         fi
 
         #Adds my default gitignore content, edit for your needs.
@@ -87,7 +94,7 @@ while true; do
         fi
 
         #Create remote if needed, or choose from list of remotes
-        read -r -p "Add a new remote, or choose from an existing remote: [n to enter address, c to choose from list] " remote_option
+        read -r -p "Add a new remote, or choose from an existing remote: [n] new remote  [c] choose existing  " remote_option
 
         if [[ "$remote_option" == [Nn] ]]; then
             newaddress
@@ -95,6 +102,14 @@ while true; do
         elif [[ "$remote_option" == [Cc] ]]; then
             choose_remote
         fi
+
+        if [[ -z "$remote_name" ]]; then
+            echo "No remote selected. Nothing to publish."
+            [[ $created_git -eq 1 ]] && rm -rf .git
+            [[ $created_gitignore -eq 1 ]] && rm -rf .gitignore
+            exit 0
+        fi
+
 
         #Stage changes and publish repo, then exit the script.
         git add .
@@ -107,13 +122,8 @@ while true; do
 
         read -r -p "Enter branch name: " branch_name
 
-        #Uses the remote name if it was added
-        if [[ "$remote_name" ]]; then
-            git push "$remote_name" "$branch_name"
-
-        else
-            git push origin "$branch_name"
-        fi
+        # Always push to the selected/added remote
+        git push "$remote_name" "$branch_name"
             
         echo "Commit published successfully"
         exit 0
